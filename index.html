@@ -6,46 +6,50 @@
 </head>
 
 <body>
-  <h1 id="title">Blackjack</h1>
-
-  <div id='dealerRow'>
-    <div id='dealersHand'>
-      <p id='dealerScore'></p>
-    </div>
-    <div id="bustDealer">
-      <div class="leftX"></div>
-      <div class="rightX"></div>
-      <p class="bustText"><b>BUST!</b></p>
-    </div>
+  <div class="Table">
     
-  </div>
+      <h1 id="title">Blackjack</h1>
 
-  <div id='buttons'>
-    <button id="hit-button">Hit</button>
-    <button id="stand-button">Stand</button>
-    <button id="new-game-button">New Game</button>
-    <p id="winner-area"></p>
-    <button id="end-game-button">End Game</button>
-  </div>
-  
-  <div id='playerRow'>
-    <div id='playersHand'>
-      <p id='playerScore'></p>
-    </div>
-    <div id="bustPlayer">
-      <div class="leftX"></div>
-      <div class="rightX"></div>
-      <p class="bustText"><b>BUST!</b></p>
-    </div>
+      <div id='dealerRow'>
+        <div id='dealersHand'></div>
+        <div id="bustDealer">
+          <div class="leftX"></div>
+          <div class="rightX"></div>
+          <p class="bustText"><b>BUST!</b></p>
+        </div>
+        
+      </div>
     
-  </div>
+      <div id='buttons'>
+        <button id="hit-button">Hit</button>
+        <button id="stand-button">Stand</button>
+        <p id="winner-area"></p>
+      </div>
+      
+      <div id='playerRow'>
+        <div id='playersHand'></div>
+        <div id="bustPlayer">
+          <div class="leftX"></div>
+          <div class="rightX"></div>
+          <p class="bustText"><b>BUST!</b></p>
+        </div>
+      </div>
+    
+      <div id='buttons'>
+        <button id="new-game-button">New Game</button>
+      </div>
 
-  <footer>
-    <h4 id=created-by>Created by Alex Fricke</h4>
-  </footer>
-
-  <div id='change-color-div'>
-    <button id="change-color">Dark Mode</button>
+      <div class="Other">
+          <p id='playerScore'></p>
+          <p id='dealerScore'></p>
+          <div id='change-color-div'>
+              <button id="change-color">Dark Mode</button>
+          </div>
+      </div>
+    
+      <footer>
+        <h4 id=created-by>Created by Alex Fricke</h4>
+      </footer>
   </div>
 
   <script src="script.js"></script>

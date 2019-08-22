@@ -5,7 +5,25 @@
 
 body {
     background-color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:50px;
 }
+
+.Table {
+    position: relative;
+    display: block;
+    z-index: 0;
+    width: 780px;
+    height: 500px;
+}
+
+/* .Other {
+    position: absolute;
+    z-index: 1;
+} */
 
 h1, h4, p {
     color: black;
@@ -24,8 +42,8 @@ h1, h4, p {
 
 button {
     background-color: #6DA623;
-    border: none;
     color: #fff;
+    border: none;
     padding: 15px 25px;
     text-align: center;
     text-decoration: none;
@@ -47,6 +65,9 @@ button {
     border-radius: 12px;
     margin: 4px 2px;
     display: inline-block;
+    position: absolute;
+    top: 0%;
+    right: -10%;
 }
 
 #change-color-div {
@@ -98,11 +119,9 @@ p {
 
 #dealersHand {
     padding: 10px 0 10px 0;
-    position: relative;
 }
 
 #playersHand {
-    position: relative;
     padding: 10px 0 10px 0;
 }
 
@@ -123,38 +142,49 @@ footer {
     justify-content: center;
     align-items: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    position: fixed;
+    height: 50px;
+    background-color: black;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+}
+
+#created-by {
+    color: white;
 }
 
 #dealerRow {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #dealerScore {
     position: absolute;
-    top: 32%;
-    right: -191%;
-    text-align: center;
+    top: 25%;
+    right: 20.25%;
 }
 
 #playerRow {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #playerScore {
     position: absolute;
-    top: 32%;
-    right: -194%;
-    text-align: center;
+    top: 69%;
+    right: 20.25%;
 }
 
 .leftX {
     position: absolute;
-    right: 42.5%;
-    top: 63%;
+    right: 40.5%;
+    top: 41.5%;
     height: 20px;
     width: 150px;
     background-color: red;
@@ -164,8 +194,8 @@ footer {
 
 .rightX {
     position: absolute;
-    right: 42.5%;
-    top: 63%;
+    right: 40.5%;
+    top: 41.5%;
     height: 20px;
     width: 150px;
     background-color: red;
@@ -175,8 +205,8 @@ footer {
 
 .bustText {
     position: absolute;
-    right: 47.4%;
-    top: 59.25%;
+    right: 46.75%;
+    top: 27.25%;
     font-size: 20px;
     background-color: black;
     color: red;

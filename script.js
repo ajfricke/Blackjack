@@ -54,9 +54,9 @@ const winnerArea = document.getElementById('winner-area');
 const newGameButton = document.getElementById('new-game-button');
 const hitButton = document.getElementById('hit-button');
 const standButton = document.getElementById('stand-button');
-const endButton = document.getElementById('end-game-button');
 const dealerScoreText = document.getElementById('dealerScore');
 const playerScoreText = document.getElementById('playerScore');
+const footer = document.getElementsByTagName('footer');
 
 // Variables for Bust
 const bustText = document.getElementsByClassName('bustText');
@@ -78,7 +78,6 @@ function resetUI() {
   }
 
   winnerArea.style.display = 'none';
-  endButton.style.display = 'none';
   bustPlayer.style.display = 'none';
   bustDealer.style.display = 'none';
   dealerScoreText.style.display = 'none';
@@ -225,12 +224,6 @@ function createPlayerSpanElement(cardCount = playerCards.length) {
   let className = 'sprite card playerCard' + cardCount;
   span.setAttribute('class', className);
   playerChildCount++;
-  var rightValue = -192;
-  if (playerChildCount == 3) rightValue = rightValue + 33;
-  if (playerChildCount == 4) rightValue = rightValue + 59;
-  if (playerChildCount == 5) rightValue = rightValue + 78;
-  if (playerChildCount == 6) rightValue = rightValue + 96;
-  playerScoreText.style.right = rightValue + '%';
   return document.getElementById("playersHand").appendChild(span);
 }
 
@@ -309,7 +302,6 @@ function checkForWinner() {
     hitButton.style.display = 'none';
     standButton.style.display = 'none';
     newGameButton.style.display = 'block';
-    endButton.style.display = 'block';
     winnerArea.style.display = 'block';
     gameWon = false;
   }
@@ -379,11 +371,6 @@ standButton.addEventListener('click', function() {
   playerStands = false;
 });
 
-// end game button clicked
-endButton.addEventListener('click', function() {
-  resetUI();
-});
-
 colorModeButton.addEventListener('click', function() {
   let color1;
   let color2;
@@ -403,9 +390,10 @@ colorModeButton.addEventListener('click', function() {
 
   documentBody.style.backgroundColor=color1;
   titleText.style.color = color2;
-  createdByText.style.color = color2;
+  createdByText.style.color = color1;
   colorModeButton.style.color = color1;
   colorModeButton.style.backgroundColor = color2;
+  footer[0].style.backgroundColor = color2;
   
   for (i = 0; i < pTags.length; i++) {
     pTags[i].style.color=color2;
