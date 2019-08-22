@@ -3,7 +3,6 @@
 
 <head>
   <link rel="stylesheet" href="style.css">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" /> -->
 </head>
 
 <body>
@@ -11,8 +10,14 @@
 
   <div id='dealerRow'>
     <div id='dealersHand'>
+      <p id='dealerScore'></p>
     </div>
-    <p id='dealerScore'>Dealer:</p>
+    <div id="bustDealer">
+      <div class="leftX"></div>
+      <div class="rightX"></div>
+      <p class="bustText"><b>BUST!</b></p>
+    </div>
+    
   </div>
 
   <div id='buttons'>
@@ -25,13 +30,23 @@
   
   <div id='playerRow'>
     <div id='playersHand'>
+      <p id='playerScore'></p>
     </div>
-    <p id='playerScore'>Player:</p>
+    <div id="bustPlayer">
+      <div class="leftX"></div>
+      <div class="rightX"></div>
+      <p class="bustText"><b>BUST!</b></p>
+    </div>
+    
   </div>
 
   <footer>
-    <h4>Created by Alex Fricke</h4>
+    <h4 id=created-by>Created by Alex Fricke</h4>
   </footer>
+
+  <div id='change-color-div'>
+    <button id="change-color">Dark Mode</button>
+  </div>
 
   <script src="script.js"></script>
 </body>

@@ -1,0 +1,189 @@
+/* Styles go here */
+.sprite {
+    background: url("cards_sprite.png") no-repeat;
+}
+
+body {
+    background-color: white;
+}
+
+h1, h4, p {
+    color: black;
+}
+
+.card {
+    width:79px;
+    height: 123px;
+    display: inline-block;
+    background-position: -158px -492px;
+    margin-right: -64px;
+}
+.card:last-child {
+    margin-right: 0px;
+}
+
+button {
+    background-color: #6DA623;
+    border: none;
+    color: #fff;
+    padding: 15px 25px;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    width: 150px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#change-color {
+    background-color: black;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 12px;
+    margin: 4px 2px;
+    display: inline-block;
+}
+
+#change-color-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+}
+
+#stand-button {
+    background-color: #BC1010;
+}
+#end-game-button {
+    background-color: blue;
+}
+
+#buttons {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#hit-button {
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+#stand-button {
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+#new-game-button {
+    margin-left: 68px;
+    margin-right: 68px;
+    background-color: #115EC3;
+}
+
+#end-game-button {
+    margin-left: 68px;
+    margin-right: 68px;
+}
+
+#dealersHand {
+    padding: 10px 0 10px 0;
+    position: relative;
+}
+
+#playersHand {
+    position: relative;
+    padding: 10px 0 10px 0;
+}
+
+#title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#winner-area {
+    width: 104px;
+    text-align: center;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#dealerRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#dealerScore {
+    position: absolute;
+    top: 32%;
+    right: -191%;
+    text-align: center;
+}
+
+#playerRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#playerScore {
+    position: absolute;
+    top: 32%;
+    right: -194%;
+    text-align: center;
+}
+
+.leftX {
+    position: absolute;
+    right: 42.5%;
+    top: 63%;
+    height: 20px;
+    width: 150px;
+    background-color: red;
+    transform: rotate(45deg);
+    animation: blink 1s linear infinite;
+}
+
+.rightX {
+    position: absolute;
+    right: 42.5%;
+    top: 63%;
+    height: 20px;
+    width: 150px;
+    background-color: red;
+    transform: rotate(-45deg);
+    animation: blink 1s linear infinite;
+}
+
+.bustText {
+    position: absolute;
+    right: 47.4%;
+    top: 59.25%;
+    font-size: 20px;
+    background-color: black;
+    color: red;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}

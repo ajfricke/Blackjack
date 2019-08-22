@@ -1,3 +1,21 @@
+////////////////////////////////////////////////////////////////////////////////////
+// TO-DO:                                                                         //
+// [ ] - win case for if both player and dealer have 21                           //
+// [ ] - fix responsiveness of score and bust                                     //
+// [x] - fix button change (from hit to new game) to be more smooth               //
+// [ ] - go through DOM variables                                                 //
+// [ ] - go through display nones                                                 //
+// [ ] - style score better                                                       //
+// [ ] - if dealer gets natural blackjack                                         //
+//                                                                                //
+// NEW FEATURES TO ADD                                                            //
+// [ ] - money & betting                                                          //
+// [ ] - doubling                                                                 //
+// [ ] - music                                                                    //
+// [ ] - hand splitting                                                           //
+// [ ] - new players                                                              //
+////////////////////////////////////////////////////////////////////////////////////
+
 // *Card Variables*
 const suits = ['Hearts', 'Clubs', 'Diamonds', 'Spades'];
 const values = ['Ace', 'King', 'Queen', 'Jack',
@@ -11,14 +29,25 @@ let playerCards;
 let dealerCards;
 let playerScore;
 let dealerScore;
-let gameWon;
-let playerWon;
-let newGame;
-let playerHit = false;
-let hitCount = 0;
-let dealerDrawCount = 0;
+let darkMode = false;
+let playerStands = false;
+let hasDealerRevealed = false;
+let dealerCard1;
+let dealerCard2;
+let playerCard1;
+let playerCard2;
+let dealerChildCount;
+let playerChildCount;
 
 // *DOM Variables*
+
+// Variables for Dark Mode
+const documentBody = document.body;
+const pTags = document.getElementsByTagName('p');
+const titleText = document.getElementById('title');
+const createdByText = document.getElementById('created-by');
+const colorModeButton = document.getElementById('change-color');
+
 const dealerCardDiv = document.getElementById("dealersHand");
 const playerCardDiv = document.getElementById("playersHand");
 const winnerArea = document.getElementById('winner-area');
@@ -26,47 +55,36 @@ const newGameButton = document.getElementById('new-game-button');
 const hitButton = document.getElementById('hit-button');
 const standButton = document.getElementById('stand-button');
 const endButton = document.getElementById('end-game-button');
+const dealerScoreText = document.getElementById('dealerScore');
+const playerScoreText = document.getElementById('playerScore');
 
-let dealerCard1;
-let dealerCard2;
-let playerCard1;
-let playerCard2;
+// Variables for Bust
+const bustText = document.getElementsByClassName('bustText');
+const bustPlayer = document.getElementById('bustPlayer');
+const bustDealer = document.getElementById('bustDealer');
 
-hitButton.style.display = 'none';
-standButton.style.display = 'none';
-endButton.style.display = 'none';
+resetUI();
 
 // *New Game Functions*
 // reset variables, populate hands, hide buttons at start of new game
-function startGame() {
-  deck = createDeck();
-  playerCards = [];
-  dealerCards = [];
-
-  populateHand(playerCards);
-  populateHand(dealerCards);
-
-  while (dealerCardDiv.firstChild) {
-    dealerCardDiv.removeChild(dealerCardDiv.firstChild);
+function resetUI() {
+  while (dealerChildCount > 0) {
+    dealerCardDiv.removeChild(dealerCardDiv.lastChild);
+    dealerChildCount--;
   }
-  while (playerCardDiv.firstChild) {
-    playerCardDiv.removeChild(playerCardDiv.firstChild);
+  while (playerChildCount > 0) {
+    playerCardDiv.removeChild(playerCardDiv.lastChild);
+    playerChildCount--;
   }
 
-  dealerCard1 = createDealerSpanElement(dealerCards.length - 1);
-  dealerCard2 = createDealerSpanElement();
-  playerCard1 = createPlayerSpanElement(playerCards.length - 1);
-  playerCard2 = createPlayerSpanElement();
-
-  playerScore = 0;
-  dealerScore = 0;
-  hitCount = 0;
-  gameWon = false;
-  playerHit = false;
-  newGame = true;
-  
   winnerArea.style.display = 'none';
   endButton.style.display = 'none';
+  bustPlayer.style.display = 'none';
+  bustDealer.style.display = 'none';
+  dealerScoreText.style.display = 'none';
+  playerScoreText.style.display = 'none';
+  hitButton.style.display = 'none';
+  standButton.style.display = 'none';
 }
 
 // create new deck of 52 unique cards
@@ -190,39 +208,12 @@ function getSpriteCardValuePosition(card) {
   }
 }
 
-// show player and dealer cards
-// FIX
-function showCards() {
-  dealerCardsText = 'Dealer has:\n';
-  playerCardsText = 'Player has:\n';
-  
-  for (let i = 0; i < dealerCards.length; i++){
-    dealerCardsText += getCardString(dealerCards[i]) + '\n';
-  }
-  dealerCardsText += '(Score: ' + dealerScore + ')\n' + '\n';
-
-  for (let i = 0; i < playerCards.length; i++){
-    playerCardsText += getCardString(playerCards[i]) + '\n';
-  }
-  playerCardsText += '(Score: ' + playerScore + ')\n';
-}
-
 // reveal the dealer's second card in hand
 function revealDealerSecondCard() {
   dealerScore = getScore(dealerCards[0], dealerScore);
+  dealerScoreText.innerText = 'Dealer: ' + dealerScore;
   displayCard(dealerCard1, dealerCards[0]);
   hasDealerRevealed = true;
-}
-
-// give player a new card and display it
-function hit() {
-  hitCount++;
-  let newCard = getNextCard(randomIndex());
-  playerCards.push(newCard);
-  playerScore = getScore(newCard, playerScore);
-
-  let newCardDisplay = createPlayerSpanElement();
-  displayCard(newCardDisplay, newCard);
 }
 
 function displayCard(element, card) {
@@ -233,6 +224,13 @@ function createPlayerSpanElement(cardCount = playerCards.length) {
   let span = document.createElement("span");
   let className = 'sprite card playerCard' + cardCount;
   span.setAttribute('class', className);
+  playerChildCount++;
+  var rightValue = -192;
+  if (playerChildCount == 3) rightValue = rightValue + 33;
+  if (playerChildCount == 4) rightValue = rightValue + 59;
+  if (playerChildCount == 5) rightValue = rightValue + 78;
+  if (playerChildCount == 6) rightValue = rightValue + 96;
+  playerScoreText.style.right = rightValue + '%';
   return document.getElementById("playersHand").appendChild(span);
 }
 
@@ -240,52 +238,52 @@ function createDealerSpanElement(cardCount = dealerCards.length) {
   let span = document.createElement("span");
   let className = 'sprite card dealerCard' + cardCount;
   span.setAttribute('class', className);
+  dealerChildCount++;
   return document.getElementById("dealersHand").appendChild(span);
 }
 
 // draw a new card for dealer and display it
 function dealerDraws() {
   while (dealerScore < 17) {
-    dealerDrawCount++;
     let newCard = getNextCard(randomIndex());
     dealerCards.push(newCard);
     dealerScore = getScore(newCard, dealerScore);
 
     let newSpanElement = createDealerSpanElement();
     displayCard(newSpanElement, newCard);
-
-    checkForWinner();
   }
-  showCards();
+  dealerScoreText.innerText = 'Dealer: ' + dealerScore;
+  checkForWinner();
 }
 
 // check possible win scenarios
 function checkForWinner() {
+  let gameWon = false;
+
   if (playerScore > 21) {
     gameWon = true;
-    winnerArea.innerText =
-      // 'Player busts. 
+    bustPlayer.style.display = 'inline-block';
+    winnerArea.innerText = 
       'DEALER WINS!';
   }
   else if (dealerScore > 21) {
     gameWon = true;
-    winnerArea.innerText =
-      //'Dealer busts. 
+    bustDealer.style.display = 'inline-block';
+    winnerArea.innerText = 
       'PLAYER WINS!';
   }
-  if (playerHit || newGame){
-    if (playerScore == 21) {
-      gameWon = true;
-      winnerArea.innerText =
-        'PLAYER WINS!';
-    }
-    else if (dealerScore == 21) {
-      gameWon = true;
-      winnerArea.innerText =
-        'DEALER WINS!';
-    }
+  if (playerScore == 21) {
+    gameWon = true;
+    winnerArea.innerText =
+      'PLAYER WINS!';
   }
-  else {
+  else if (dealerScore == 21) {
+    gameWon = true;
+    winnerArea.innerText =
+      'DEALER WINS!';
+  }
+
+  if (playerStands) {
     if (dealerScore <= 21 && dealerScore > playerScore){
       gameWon = true;
       winnerArea.innerText =
@@ -302,79 +300,118 @@ function checkForWinner() {
         'TIE GAME!';
     }
   }
+
+  if (gameWon) {
+    if (!hasDealerRevealed) {
+      revealDealerSecondCard();
+    }
+    
+    hitButton.style.display = 'none';
+    standButton.style.display = 'none';
+    newGameButton.style.display = 'block';
+    endButton.style.display = 'block';
+    winnerArea.style.display = 'block';
+    gameWon = false;
+  }
 }
 
 // *Buttons Clicked*
 // new game button clicked
 newGameButton.addEventListener('click', function() {
+  resetUI();
+  
   newGameButton.style.display = 'none';
   hitButton.style.display = 'block';
   standButton.style.display = 'block';
   
-  startGame();
+  deck = createDeck();
+  playerCards = [];
+  dealerCards = [];
+
+  playerScore = 0;
+  dealerScore = 0;
+  dealerChildCount = 0;
+  playerChildCount = 0;
+  hasDealerRevealed = false;
+
+  populateHand(playerCards);
+  populateHand(dealerCards);
 
   dealerScore = getScore(dealerCards[1], dealerScore);
   playerScore = getScore(playerCards[0], playerScore);
   playerScore = getScore(playerCards[1], playerScore);
 
-  dealerCard2.style.backgroundPosition = getSpriteCardValuePosition(dealerCards[1]) + "px " + getSpriteCardSuitPosition(dealerCards[1]) + "px";
-  playerCard1.style.backgroundPosition = getSpriteCardValuePosition(playerCards[0]) + "px " + getSpriteCardSuitPosition(playerCards[0]) + "px";
-  playerCard2.style.backgroundPosition = getSpriteCardValuePosition(playerCards[1]) + "px " + getSpriteCardSuitPosition(playerCards[1]) + "px";
+  dealerScoreText.innerText = 'Dealer: ' + dealerScore;
+  playerScoreText.innerText = 'Player: ' + playerScore;
+  dealerScoreText.style.display = 'inline-block';
+  playerScoreText.style.display = 'inline-block';
+
+  dealerCard1 = createDealerSpanElement(dealerCards.length - 1);
+  dealerCard2 = createDealerSpanElement();
+  playerCard1 = createPlayerSpanElement(playerCards.length - 1);
+  playerCard2 = createPlayerSpanElement();
+
+  displayCard(dealerCard2, dealerCards[1]);
+  displayCard(playerCard1, playerCards[0]);
+  displayCard(playerCard2, playerCards[1]);
 
   checkForWinner();
-  if (gameWon){
-    hitButton.style.display = 'none';
-    standButton.style.display = 'none';
-    newGameButton.style.display = 'block';
-    endButton.style.display = 'block';
-    winnerArea.style.display = 'block';
-    showCards();
-  }
-  newGame = false;
 });
 
 // hit button clicked
 hitButton.addEventListener('click', function() {
-  playerHit = true;
-  
-  hit();
-  showCards();
-  checkForWinner();
+  let newCard = getNextCard(randomIndex());
+  playerCards.push(newCard);
 
-  playerHit = false;
-  
-  if (gameWon){
-    revealDealerSecondCard();
-    hitButton.style.display = 'none';
-    standButton.style.display = 'none';
-    newGameButton.style.display = 'block';
-    endButton.style.display = 'block';
-    winnerArea.style.display = 'block';
-  }
+  playerScore = getScore(newCard, playerScore);
+  playerScoreText.innerText = 'Player: ' + playerScore;
+
+  let newCardDisplay = createPlayerSpanElement();
+  displayCard(newCardDisplay, newCard);
+  checkForWinner();
 });
 
 // stand button clicked
 standButton.addEventListener('click', function() {
-  hitButton.style.display = 'none';
-  standButton.style.display = 'none';
-  newGameButton.style.display = 'block';
-  endButton.style.display = 'block';
-  winnerArea.style.display = 'block';
-
+  playerStands = true;
   revealDealerSecondCard();
-  checkForWinner();
   dealerDraws();
+  playerStands = false;
 });
 
 // end game button clicked
 endButton.addEventListener('click', function() {
-  endButton.style.display = 'none';
-  winnerArea.style.display = 'none';
-
-  while (dealerCardDiv.firstChild) {
-    dealerCardDiv.removeChild(dealerCardDiv.firstChild);
-  }
-  while (playerCardDiv.firstChild) {
-    playerCardDiv.removeChild(playerCardDiv.firstChild);
-  }
+  resetUI();
 });
+
+colorModeButton.addEventListener('click', function() {
+  let color1;
+  let color2;
+
+  if(!darkMode) {
+    darkMode = true;
+    color1 = 'black';
+    color2 = 'white';
+    colorModeButton.innerHTML = 'Light Mode';
+  }
+  else {
+    darkMode = false;
+    color1 = 'white';
+    color2 = 'black';
+    colorModeButton.innerHTML = 'Dark Mode';
+  }
+
+  documentBody.style.backgroundColor=color1;
+  titleText.style.color = color2;
+  createdByText.style.color = color2;
+  colorModeButton.style.color = color1;
+  colorModeButton.style.backgroundColor = color2;
+  
+  for (i = 0; i < pTags.length; i++) {
+    pTags[i].style.color=color2;
+  }
+
+  bustText[0].style.color = "red";
+  bustText[1].style.color = "red";
+});
+
