@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////
 // TO-DO:                                                                         //
-// [ ] - win case for if both player and dealer have 21                           //
+// [x] - win case for if both player and dealer have 21                           //
 // [ ] - fix responsiveness of score and bust                                     //
 // [x] - fix button change (from hit to new game) to be more smooth               //
 // [ ] - go through DOM variables                                                 //
@@ -36,8 +36,6 @@ let dealerCard1;
 let dealerCard2;
 let playerCard1;
 let playerCard2;
-let dealerChildCount;
-let playerChildCount;
 
 // *DOM Variables*
 
@@ -47,6 +45,7 @@ const pTags = document.getElementsByTagName('p');
 const titleText = document.getElementById('title');
 const createdByText = document.getElementById('created-by');
 const colorModeButton = document.getElementById('change-color');
+const blackjackImage = document.getElementById('blackjack-title');
 
 const dealerCardDiv = document.getElementById("dealersHand");
 const playerCardDiv = document.getElementById("playersHand");
@@ -54,6 +53,7 @@ const winnerArea = document.getElementById('winner-area');
 const newGameButton = document.getElementById('new-game-button');
 const hitButton = document.getElementById('hit-button');
 const standButton = document.getElementById('stand-button');
+const instructionsButton = document.getElementById('instructions-button');
 const dealerScoreText = document.getElementById('dealerScore');
 const playerScoreText = document.getElementById('playerScore');
 const footer = document.getElementsByTagName('footer');
@@ -63,18 +63,18 @@ const bustText = document.getElementsByClassName('bustText');
 const bustPlayer = document.getElementById('bustPlayer');
 const bustDealer = document.getElementById('bustDealer');
 
+colorModeButton.style.display = 'none';
+
 resetUI();
 
 // *New Game Functions*
 // reset variables, populate hands, hide buttons at start of new game
 function resetUI() {
-  while (dealerChildCount > 0) {
+  while (dealerCardDiv.firstChild) {
     dealerCardDiv.removeChild(dealerCardDiv.lastChild);
-    dealerChildCount--;
   }
-  while (playerChildCount > 0) {
+  while (playerCardDiv.firstChild) {
     playerCardDiv.removeChild(playerCardDiv.lastChild);
-    playerChildCount--;
   }
 
   winnerArea.style.display = 'none';
@@ -223,7 +223,6 @@ function createPlayerSpanElement(cardCount = playerCards.length) {
   let span = document.createElement("span");
   let className = 'sprite card playerCard' + cardCount;
   span.setAttribute('class', className);
-  playerChildCount++;
   return document.getElementById("playersHand").appendChild(span);
 }
 
@@ -231,7 +230,6 @@ function createDealerSpanElement(cardCount = dealerCards.length) {
   let span = document.createElement("span");
   let className = 'sprite card dealerCard' + cardCount;
   span.setAttribute('class', className);
-  dealerChildCount++;
   return document.getElementById("dealersHand").appendChild(span);
 }
 
@@ -265,7 +263,12 @@ function checkForWinner() {
     winnerArea.innerText = 
       'PLAYER WINS!';
   }
-  if (playerScore == 21) {
+  else if (playerScore == 21 && dealerScore == 21) {
+    gameWon = true;
+    winnerArea.innerText =
+      'TIE GAME!';
+  }
+  else if (playerScore == 21) {
     gameWon = true;
     winnerArea.innerText =
       'PLAYER WINS!';
@@ -301,7 +304,7 @@ function checkForWinner() {
     
     hitButton.style.display = 'none';
     standButton.style.display = 'none';
-    newGameButton.style.display = 'block';
+    // newGameButton.style.display = 'block';
     winnerArea.style.display = 'block';
     gameWon = false;
   }
@@ -311,10 +314,17 @@ function checkForWinner() {
 // new game button clicked
 newGameButton.addEventListener('click', function() {
   resetUI();
+
+  newGameButton.style.top = '0%';
+  newGameButton.style.left = '-10%';
+  blackjackImage.style.width = '200px';
+  blackjackImage.style.height = '120px';
+  blackjackImage.style.paddingTop = '0px';
   
-  newGameButton.style.display = 'none';
   hitButton.style.display = 'block';
   standButton.style.display = 'block';
+  colorModeButton.style.display = 'block';
+  instructionsButton.style.display = 'none';
   
   deck = createDeck();
   playerCards = [];
@@ -322,8 +332,6 @@ newGameButton.addEventListener('click', function() {
 
   playerScore = 0;
   dealerScore = 0;
-  dealerChildCount = 0;
-  playerChildCount = 0;
   hasDealerRevealed = false;
 
   populateHand(playerCards);
@@ -380,16 +388,17 @@ colorModeButton.addEventListener('click', function() {
     color1 = 'black';
     color2 = 'white';
     colorModeButton.innerHTML = 'Light Mode';
+    blackjackImage.src = "blackjackimageBLACK.jpg";
   }
   else {
     darkMode = false;
     color1 = 'white';
     color2 = 'black';
     colorModeButton.innerHTML = 'Dark Mode';
+    blackjackImage.src = "blackjackimageWHITE.jpg";
   }
 
-  documentBody.style.backgroundColor=color1;
-  titleText.style.color = color2;
+  documentBody.style.backgroundColor = color1;
   createdByText.style.color = color1;
   colorModeButton.style.color = color1;
   colorModeButton.style.backgroundColor = color2;
