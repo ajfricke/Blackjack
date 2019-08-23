@@ -1,0 +1,302 @@
+/* Styles go here */
+.sprite {
+    background: url("cards_sprite.png") no-repeat;
+}
+
+body {
+    background-color: white;
+}
+
+#table {
+    position: relative;
+    display: block;
+    z-index: 0;
+    width: 780px;
+    height: 500px;
+    justify-content: center;
+    align-items: center;
+    margin:0 auto 50px;
+}
+
+#betting {
+    margin-bottom:50px;
+}
+
+#deal-button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-decoration: none;
+    margin: 25px;
+    color: #BC1010;
+}
+
+#deal {
+    background-color: #BC1010;
+}
+
+#all-in-button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 25px;  
+}
+
+#all-in {
+    background-color: #BC1010;
+}
+
+#bet-buttons1 {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 25px;
+}
+#bet-buttons2 {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 25px;
+}
+
+#bet1 {
+    background-color: black;
+}
+#bet5 {
+    background-color: black;
+}
+#bet25 {
+    background-color: black;
+}
+#bet50 {
+    background-color: black;
+}
+#bet100 {
+    background-color: black;
+}
+#bet500 {
+    background-color: black;
+}
+
+#money-variables{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#bank{
+    margin: 25px;
+}
+
+#bet-money{
+    margin: 25px;
+}
+
+h1, h4, p {
+    color: black;
+}
+
+.card {
+    width:79px;
+    height: 123px;
+    display: inline-block;
+    background-position: -158px -492px;
+    margin-right: -64px;
+}
+.card:last-child {
+    margin-right: 0px;
+}
+
+button {
+    background-color: #6DA623;
+    color: #fff;
+    border: none;
+    padding: 15px 25px;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    width: 150px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#change-color {
+    background-color: black;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 12px;
+    position: absolute;
+    top: 0%;
+    right: -10%;
+}
+
+#change-color-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 16px;
+}
+
+#stand-button {
+    background-color: #BC1010;
+}
+#end-game-button {
+    background-color: blue;
+}
+
+#blackjack-title {
+    width: 200px;
+    height: 120px;
+    display: block;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 50px;
+}
+
+#buttons {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+#hit-button {
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+#stand-button {
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+#new-game-button {
+    background-color: #115EC3;
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 12px;
+    top: 0%;
+    left: -10%;
+}
+
+#end-game-button {
+    margin-left: 68px;
+    margin-right: 68px;
+}
+
+#dealersHand {
+    padding: 10px 0 10px 0;
+}
+
+#playersHand {
+    padding: 10px 0 10px 0;
+}
+
+#title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#winner-area {
+    width: 104px;
+    text-align: center;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    position: fixed;
+    height: 50px;
+    background-color: black;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+}
+
+#created-by {
+    color: white;
+}
+
+#dealerRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#dealerScore {
+    position: absolute;
+    top: 43%;
+    right: 20.25%;
+    color: black;
+}
+
+#playerRow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#playerScore {
+    position: absolute;
+    top: 87%;
+    right: 20.25%;
+}
+
+.leftX {
+    position: absolute;
+    right: 40.5%;
+    top: 41.5%;
+    height: 20px;
+    width: 150px;
+    background-color: red;
+    transform: rotate(45deg);
+    animation: blink 1s linear infinite;
+}
+
+.rightX {
+    position: absolute;
+    right: 40.5%;
+    top: 41.5%;
+    height: 20px;
+    width: 150px;
+    background-color: red;
+    transform: rotate(-45deg);
+    animation: blink 1s linear infinite;
+}
+
+.bustText {
+    position: absolute;
+    right: 46.75%;
+    top: 27.25%;
+    font-size: 20px;
+    background-color: black;
+    color: red;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}

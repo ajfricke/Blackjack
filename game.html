@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="game-style.css">
+</head>
+
+<body>
+  <div id="table">
+      <img id='blackjack-title' src='blackjackimageWHITE.jpg' alt='Blackjack Title Image'>
+
+      <div id='dealerRow'>
+        <div id='dealersHand'></div>
+        <div id="bustDealer">
+          <div class="leftX"></div>
+          <div class="rightX"></div>
+          <p class="bustText"><b>BUST!</b></p>
+        </div>
+        
+      </div>
+    
+      <div id='buttons'>
+        <button id="hit-button">Hit</button>
+        <button id="stand-button">Stand</button>
+        <p id="winner-area"></p>
+      </div>
+      
+      <div id='playerRow'>
+        <div id='playersHand'></div>
+        <div id="bustPlayer">
+          <div class="leftX"></div>
+          <div class="rightX"></div>
+          <p class="bustText"><b>BUST!</b></p>
+        </div>
+      </div>
+    
+      <div id='buttons'>
+        
+      </div>
+
+      <div class="Other">
+          <p id='playerScore'></p>
+          <p id='dealerScore'></p>
+          <button id="new-game-button">Continue</button>
+          <div id='change-color-div'>
+              <button id="change-color">Dark Mode</button>
+          </div>
+      </div>
+  </div>
+
+  <div id="betting">
+      <a id="deal-button"><button id='deal'>Deal!</button></a>
+      <div id='bet-buttons1'>
+          <button id='bet1'>1</button>
+          <button id='bet5'>5</button>
+          <button id='bet25'>25</button>
+      </div>
+      <div id='bet-buttons2'>
+          <button id='bet50'>50</button>
+          <button id='bet100'>100</button>
+          <button id='bet500'>500</button>
+      </div>
+      <div id='all-in-button'>
+          <button id='all-in'>ALL IN</button>
+      </div>
+      <div id='money-variables'>
+          <p id='bank'></p>
+          <p id='bet-money'></p>
+      </div>
+  </div>
+
+  <footer>
+      <h4 id=created-by>Created by Alex Fricke</h4>
+  </footer>
+
+  <script src="game-script.js"></script>
+</body>
+
+</html>

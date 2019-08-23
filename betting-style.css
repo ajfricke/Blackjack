@@ -1,0 +1,92 @@
+/* Styles go here */
+
+body {
+    background-color: white;
+    margin-bottom:50px;
+}
+
+button {
+    background-color: black;
+    color: #fff;
+    border: none;
+    padding: 15px 25px;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    width: 150px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#deal-button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-decoration: none;
+    margin: 25px;
+    color: #BC1010;
+}
+
+#deal {
+    background-color: #BC1010;
+}
+
+#all-in-button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 25px;  
+}
+
+#all-in {
+    background-color: #BC1010;
+}
+
+#bet-buttons1 {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 25px;
+}
+#bet-buttons2 {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 25px;
+}
+
+#money-variables{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#bank{
+    margin: 25px;
+}
+
+#bet-money{
+    margin: 25px;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    position: fixed;
+    height: 50px;
+    background-color: black;
+    color: white;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+}
+

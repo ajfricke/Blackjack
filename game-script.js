@@ -36,6 +36,8 @@ let dealerCard1;
 let dealerCard2;
 let playerCard1;
 let playerCard2;
+let playerWon = false;
+let tieGame = false;
 
 // *DOM Variables*
 
@@ -53,19 +55,21 @@ const winnerArea = document.getElementById('winner-area');
 const newGameButton = document.getElementById('new-game-button');
 const hitButton = document.getElementById('hit-button');
 const standButton = document.getElementById('stand-button');
-const instructionsButton = document.getElementById('instructions-button');
 const dealerScoreText = document.getElementById('dealerScore');
 const playerScoreText = document.getElementById('playerScore');
 const footer = document.getElementsByTagName('footer');
+
+const gameUI = document.getElementById("table");
+const betUI = document.getElementById("betting");
 
 // Variables for Bust
 const bustText = document.getElementsByClassName('bustText');
 const bustPlayer = document.getElementById('bustPlayer');
 const bustDealer = document.getElementById('bustDealer');
 
-colorModeButton.style.display = 'none';
+gameUI.style.display = 'none';
 
-resetUI();
+newGame();
 
 // *New Game Functions*
 // reset variables, populate hands, hide buttons at start of new game
@@ -80,10 +84,10 @@ function resetUI() {
   winnerArea.style.display = 'none';
   bustPlayer.style.display = 'none';
   bustDealer.style.display = 'none';
-  dealerScoreText.style.display = 'none';
-  playerScoreText.style.display = 'none';
-  hitButton.style.display = 'none';
-  standButton.style.display = 'none';
+  // dealerScoreText.style.display = 'none';
+  // playerScoreText.style.display = 'none';
+  // hitButton.style.display = 'none';
+  // standButton.style.display = 'none';
 }
 
 // create new deck of 52 unique cards
@@ -259,17 +263,20 @@ function checkForWinner() {
   }
   else if (dealerScore > 21) {
     gameWon = true;
+    playerWon = true;
     bustDealer.style.display = 'inline-block';
     winnerArea.innerText = 
       'PLAYER WINS!';
   }
   else if (playerScore == 21 && dealerScore == 21) {
     gameWon = true;
+    tieGame = true;
     winnerArea.innerText =
       'TIE GAME!';
   }
   else if (playerScore == 21) {
     gameWon = true;
+    playerWon = true;
     winnerArea.innerText =
       'PLAYER WINS!';
   }
@@ -287,11 +294,13 @@ function checkForWinner() {
     }
     else if (dealerScore <= 21 && dealerScore < playerScore){
       gameWon = true;
+      playerWon = true;
       winnerArea.innerText =
         'PLAYER WINS!';
     }
     else if (dealerScore <= 21 && dealerScore == playerScore){
       gameWon = true;
+      tieGame = true;
       winnerArea.innerText =
         'TIE GAME!';
     }
@@ -301,10 +310,14 @@ function checkForWinner() {
     if (!hasDealerRevealed) {
       revealDealerSecondCard();
     }
-    
+    if (playerWon) {
+      betMoney = betMoney*2;
+    }
+    else {
+      betMoney = 0;
+    }
     hitButton.style.display = 'none';
     standButton.style.display = 'none';
-    // newGameButton.style.display = 'block';
     winnerArea.style.display = 'block';
     gameWon = false;
   }
@@ -312,19 +325,13 @@ function checkForWinner() {
 
 // *Buttons Clicked*
 // new game button clicked
-newGameButton.addEventListener('click', function() {
+function newGame() {
   resetUI();
 
-  newGameButton.style.top = '0%';
-  newGameButton.style.left = '-10%';
-  blackjackImage.style.width = '200px';
-  blackjackImage.style.height = '120px';
-  blackjackImage.style.paddingTop = '0px';
-  
   hitButton.style.display = 'block';
   standButton.style.display = 'block';
+
   colorModeButton.style.display = 'block';
-  instructionsButton.style.display = 'none';
   
   deck = createDeck();
   playerCards = [];
@@ -356,7 +363,7 @@ newGameButton.addEventListener('click', function() {
   displayCard(playerCard2, playerCards[1]);
 
   checkForWinner();
-});
+};
 
 // hit button clicked
 hitButton.addEventListener('click', function() {
@@ -410,5 +417,111 @@ colorModeButton.addEventListener('click', function() {
 
   bustText[0].style.color = "red";
   bustText[1].style.color = "red";
+});
+
+const bet1Button = document.getElementById("bet1");
+const bet5Button = document.getElementById("bet5");
+const bet25Button = document.getElementById("bet25");
+const bet50Button = document.getElementById("bet50");
+const bet100Button = document.getElementById("bet100");
+const bet500Button = document.getElementById("bet500");
+const allInButton = document.getElementById("all-in");
+const bankText = document.getElementById("bank");
+const betMoneyText = document.getElementById("bet-money");
+const dealButton = document.getElementById("deal");
+
+var bank;
+var betMoney;
+
+resetVariables();
+updateBetVariables();
+
+function resetVariables() {
+  bank = 1000;
+  betMoney = 0;
+}
+
+function updateBetVariables() {
+  bankText.innerText = 'Bank: $' + bank;
+  betMoneyText.innerText = 'Bet: $' + betMoney;
+
+  if (bank < 500) bet500Button.style.display = 'none';
+  if (bank < 100) bet100Button.style.display = 'none';
+  if (bank < 50) bet50Button.style.display = 'none';
+  if (bank < 25) bet25Button.style.display = 'none';
+  if (bank < 5) bet5Button.style.display = 'none';
+  if (bank < 1) {
+    bet1Button.style.display = 'none';
+    allInButton.style.display = 'none';
+  }
+  if (bank <= 0 && betMoney == 0) dealButton.style.display = 'none';
+  if (bank > 500) bet500Button.style.display = 'block';
+  if (bank > 100) bet100Button.style.display = 'block';
+  if (bank > 50) bet50Button.style.display = 'block';
+  if (bank > 25) bet25Button.style.display = 'block';
+  if (bank > 5) bet5Button.style.display = 'block';
+  if (bank > 1) {
+    bet1Button.style.display = 'block';
+    allInButton.style.display = 'block';
+  }
+}
+
+bet1Button.addEventListener('click', function() {
+  bank--;
+  betMoney++;
+  updateBetVariables();
+});
+
+bet5Button.addEventListener('click', function() {
+  bank-=5;
+  betMoney+=5;
+  updateBetVariables();
+});
+
+bet25Button.addEventListener('click', function() {
+  bank-=25;
+  betMoney+=25;
+  updateBetVariables();
+});
+
+bet50Button.addEventListener('click', function() {
+  bank-=50;
+  betMoney+=50;
+  updateBetVariables();
+});
+
+bet100Button.addEventListener('click', function() {
+  bank-=100;
+  betMoney+=100;
+  updateBetVariables();
+});
+
+bet500Button.addEventListener('click', function() {
+  bank-=500;
+  betMoney+=500;
+  updateBetVariables();
+});
+
+allInButton.addEventListener('click', function() {
+  betMoney+=bank;
+  bank = 0;
+  updateBetVariables();
+});
+
+dealButton.addEventListener('click', function() {
+  gameUI.style.display = 'block';
+  betUI.style.display = 'none';
+  newGame();
+});
+
+newGameButton.addEventListener('click', function() {
+  gameUI.style.display = 'none';
+  betUI.style.display = 'block';
+  bank += betMoney;
+  console.log(betMoney);
+  console.log(bank);
+  betMoney = 0;
+  updateBetVariables();
+  playerWon = false;
 });
 
